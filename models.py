@@ -53,10 +53,42 @@ class Pretrained_NLP:
 
         return df_text_sentiment
         
-    def named_entity_recognition(self) -> None:
-        classifier = pipeline('ner')
-        classifier(self.text)
-    def question_answering(self) -> None:
+    def named_entity_recognition(self):
+        """
+        predicts real world entities present in the text with start and end index in text.
+        Real world entities are real world objects such as person names, location, country, product names, etc
+        
+        Arguments:
+        ----------------
+        self: class object
+
+        Returns:
+        ----------------
+        df_ent: predicted entities, pd.DataFrame
+        """
+        # pass 'text-classification' or 'sentitment-analysis'
+        # for sentiment analysis
+        nlp_task = 'ner'
+
+        # Instantiate pipeline api,
+        # pass nlp_task as an arugment,
+        # it will downloads pretrained models
+        # from huggingface ecosystem, and cached it.
+        #
+        # Use grouped_entites=True,
+        # does postprocessing and grouped
+        # text with similar entites
+        classifier = pipeline(nlp_task, grouped_entities=True)
+
+        # entity prediction
+        ent_list = classifier(self.text)
+
+        # convert to pandas dataframe
+        # for readable output
+        df_ent = pd.DataFrame(ent_list)
+        return df_ent
+
+    def question_answering(self):
         pass
     def summarization(self) -> None:
         pass
