@@ -22,7 +22,7 @@ class Pretrained_NLP:
 
     def sentiment_analysis(self) -> None:
         """
-        compute sentiments of text using HuggingFace pipeline api.
+        compute sentiments (positive or negative) of text using HuggingFace pipeline api.
         By default it will use DistilBERT pretrained model.
 
         Arguments:
@@ -32,6 +32,7 @@ class Pretrained_NLP:
         Returns:
         ------------------
             df_text_sentiment: sentiment of text, pd.DataFrame
+                
         """
         # pass 'text-classification' or 'sentitment-analysis'
         # for sentiment analysis
@@ -53,7 +54,8 @@ class Pretrained_NLP:
         return df_text_sentiment
         
     def named_entity_recognition(self) -> None:
-        pass
+        classifier = pipeline('ner')
+        classifier(self.text)
     def question_answering(self) -> None:
         pass
     def summarization(self) -> None:
